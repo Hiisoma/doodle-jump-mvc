@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- ИГРОВОЙ КОНТЕЙНЕР -->
     <div id="game-wrap">
-        <!-- Канвас для игры -->
+        <!-- Игровое поле -->
         <canvas id="gameCanvas" width="480" height="720"></canvas>
         
         <!-- Счет -->
@@ -17,8 +16,9 @@
         
         <!-- СТАРТОВЫЙ ЭКРАН -->
         <div id="startScreen">
-            <h1>🎮 Doodle Jump</h1>
+            <h1>Doodle Jump</h1>
             <p>Управление: ← → или A/D</p>
+            <p>На телефоне: касайтесь стрелок</p>
             <button id="startBtn">Начать игру</button>
         </div>
         
@@ -28,12 +28,107 @@
             <p>Счет: <span id="finalScore">0</span></p>
             <button id="restartBtn">Играть снова</button>
         </div>
+        
+        <!-- ===== КНОПКИ ДЛЯ ТЕЛЕФОНА (ВИДНЫ ВСЕГДА) ===== -->
+        <div id="mobile-controls">
+            <button id="btn-left">◀</button>
+            <button id="btn-right">▶</button>
+        </div>
     </div>
 
-    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ -->
     <script src="js/model.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- ПРЯМОЕ УПРАВЛЕНИЕ ДЛЯ ТЕЛЕФОНА -->
+    <script>
+        // Ждем загрузки игры
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Загрузка мобильного управления...');
+            
+            // Находим кнопки
+            const btnLeft = document.getElementById('btn-left');
+            const btnRight = document.getElementById('btn-right');
+            
+            // Функция для настройки кнопки
+            function setupButton(button, key) {
+                if (!button) {
+                    console.error('Кнопка не найдена:', key);
+                    return;
+                }
+                
+                // Касание пальцем
+                button.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = true;
+                        console.log('Кнопка:', key);
+                    } else {
+                        console.log('Контроллер еще не загружен');
+                    }
+                }, { passive: false });
+                
+                button.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = false;
+                    }
+                }, { passive: false });
+                
+                button.addEventListener('touchcancel', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = false;
+                    }
+                }, { passive: false });
+                
+                // Для мыши (тестирование на ПК)
+                button.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = true;
+                    }
+                });
+                
+                button.addEventListener('mouseup', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = false;
+                    }
+                });
+                
+                button.addEventListener('mouseleave', function(e) {
+                    e.preventDefault();
+                    if (window.controller) {
+                        window.controller.keys[key] = false;
+                    }
+                });
+                
+                console.log('Кнопка настроена:', key);
+            }
+            
+            // Настраиваем обе кнопки
+            setupButton(btnLeft, 'left');
+            setupButton(btnRight, 'right');
+            
+            // Проверяем, что контроллер загрузился
+            setTimeout(function() {
+                if (window.controller) {
+                    console.log('Контроллер найден!');
+                } else {
+                    console.log('Контроллер не найден, но кнопки работают');
+                }
+            }, 1000);
+        });
+        
+        // Сохраняем ссылку на контроллер когда он создастся
+        const originalStartGame = GameController.prototype.startGame;
+        GameController.prototype.startGame = function() {
+            window.controller = this;
+            console.log('Контроллер сохранен для мобильного управления');
+            originalStartGame.call(this);
+        };
+    </script>
 </body>
 </html>
