@@ -2,11 +2,11 @@
 // 2. ПРЕДСТАВЛЕНИЕ (View) - отображение
 // ============================================
 
-console.log('🎨 Загрузка представления...');
+console.log('Загрузка представления...');
 
 class GameView {
     constructor() {
-        console.log('🔄 Создание представления...');
+        console.log('Создание представления...');
         
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
@@ -18,7 +18,7 @@ class GameView {
         this.width = 480;
         this.height = 720;
         
-        console.log('✅ Представление создано');
+        console.log('Представление создано');
     }
     
     render(model) {
