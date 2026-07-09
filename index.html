@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Doodle Jump MVC</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ИГРОВОЙ КОНТЕЙНЕР -->
+    <div id="game-wrap">
+        <!-- Канвас для игры -->
+        <canvas id="gameCanvas" width="480" height="720"></canvas>
+        
+        <!-- Счет -->
+        <div id="scoreDisplay">0</div>
+        
+        <!-- СТАРТОВЫЙ ЭКРАН -->
+        <div id="startScreen">
+            <h1>🎮 Doodle Jump</h1>
+            <p>Управление: ← → или A/D</p>
+            <button id="startBtn">Начать игру</button>
+        </div>
+        
+        <!-- ЭКРАН GAME OVER -->
+        <div id="gameOverScreen" style="display: none;">
+            <h1>💀 Игра окончена!</h1>
+            <p>Счет: <span id="finalScore">0</span></p>
+            <button id="restartBtn">Играть снова</button>
+        </div>
+    </div>
+
+    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ -->
+    <script src="js/model.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
