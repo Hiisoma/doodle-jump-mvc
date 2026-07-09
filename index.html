@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- ИГРОВОЙ КОНТЕЙНЕР -->
     <div id="game-wrap">
-        <!-- Канвас для игры -->
+        <!-- Игровое поле -->
         <canvas id="gameCanvas" width="480" height="720"></canvas>
         
         <!-- Счет -->
@@ -19,6 +18,7 @@
         <div id="startScreen">
             <h1>🎮 Doodle Jump</h1>
             <p>Управление: ← → или A/D</p>
+            <p>📱 На телефоне: касайтесь левой/правой части экрана</p>
             <button id="startBtn">Начать игру</button>
         </div>
         
@@ -28,9 +28,14 @@
             <p>Счет: <span id="finalScore">0</span></p>
             <button id="restartBtn">Играть снова</button>
         </div>
+        
+        <!-- ===== СЕНСОРНОЕ УПРАВЛЕНИЕ ===== -->
+        <div id="touch-controls">
+            <div id="touch-left" class="touch-zone">◀</div>
+            <div id="touch-right" class="touch-zone">▶</div>
+        </div>
     </div>
 
-    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ -->
     <script src="js/model.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
