@@ -1,135 +1,54 @@
-/* ============================================
-   СТИЛИ ДЛЯ ИГРЫ
-   ============================================ */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #1b1f2a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    overflow: hidden;
-}
-
-/* ===== КОНТЕЙНЕР ИГРЫ ===== */
-#game-wrap {
-    position: relative;
-    width: 480px;
-    height: 720px;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-}
-
-/* ===== ИГРОВОЕ ПОЛЕ ===== */
-#gameCanvas {
-    display: block;
-    background: linear-gradient(#bdeaff, #eaf9ff);
-    width: 100%;
-    height: 100%;
-}
-
-/* ===== СЧЕТ ===== */
-#scoreDisplay {
+/* ===== КНОПКИ ДЛЯ ТЕЛЕФОНА ===== */
+#mobile-controls {
     position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 32px;
-    font-weight: bold;
-    color: #2b2b2b;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.7);
-    pointer-events: none;
-    z-index: 10;
-}
-
-/* ===== ЭКРАНЫ ===== */
-#startScreen,
-#gameOverScreen {
-    position: absolute;
-    top: 0;
+    bottom: 30px;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(20, 24, 34, 0.88);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 50;
+    pointer-events: none;
+}
+
+#mobile-controls button {
+    pointer-events: auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    font-size: 40px;
+    color: white;
+    display: flex;
     align-items: center;
-    color: white;
-    padding: 30px;
-    z-index: 20;
-    text-align: center;
-}
-
-#gameOverScreen {
-    display: none;
-}
-
-#startScreen h1,
-#gameOverScreen h1 {
-    font-size: 42px;
-    margin-bottom: 15px;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-#startScreen p {
-    font-size: 16px;
-    margin-bottom: 25px;
-    opacity: 0.9;
-    line-height: 1.6;
-}
-
-button {
-    padding: 14px 40px;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 30px;
-    background: #ff5d5d;
-    color: white;
+    justify-content: center;
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.2s ease;
-    box-shadow: 0 4px 15px rgba(255, 93, 93, 0.4);
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-button:hover {
-    background: #ff3d3d;
-    transform: scale(1.05);
+#mobile-controls button:active {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0.9);
 }
 
-button:active {
-    transform: scale(0.95);
+#mobile-controls button:hover {
+    background: rgba(255, 255, 255, 0.4);
 }
 
-#finalScore {
-    font-size: 28px;
-    color: #ffd700;
-    font-weight: bold;
-}
-
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 500px) {
-    #game-wrap {
-        width: 100vw;
-        height: 100vh;
-        border-radius: 0;
+/* Скрываем кнопки на больших экранах */
+@media (min-width: 768px) {
+    #mobile-controls {
+        display: none;
     }
-    
-    #startScreen h1,
-    #gameOverScreen h1 {
-        font-size: 32px;
-    }
-    
-    #scoreDisplay {
-        font-size: 24px;
-        top: 15px;
+}
+
+/* Показываем кнопки на телефонах */
+@media (max-width: 767px) {
+    #mobile-controls {
+        display: flex;
     }
 }
