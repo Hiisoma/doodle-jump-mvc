@@ -6,7 +6,7 @@ console.log('🎮 Загрузка контроллера...');
 
 class GameController {
     constructor(model, view) {
-        console.log('🔄 Создание контроллера...');
+        console.log('Создание контроллера...');
         
         this.model = model;
         this.view = view;
@@ -25,7 +25,7 @@ class GameController {
         // Показываем стартовый экран
         this.view.showStartScreen();
         
-        console.log('✅ Контроллер создан!');
+        console.log('Контроллер создан!');
     }
     
     // ============================================
@@ -34,7 +34,7 @@ class GameController {
     setupControls() {
         console.log('⌨️ Настройка управления...');
         
-        // Клавиатура
+        // ---- КЛАВИАТУРА ----
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
                 this.keys.left = true;
@@ -57,25 +57,65 @@ class GameController {
             }
         });
         
-        // Кнопки
+        // ---- СЕНСОРНОЕ УПРАВЛЕНИЕ (ТЕЛЕФОН) ----
+        const touchLeft = document.getElementById('touch-left');
+        const touchRight = document.getElementById('touch-right');
+        
+        // Функция для обработки касаний
+        const handleTouchStart = (direction) => (e) => {
+            e.preventDefault();
+            this.keys[direction] = true;
+            console.log(`📱 Касание: ${direction}`);
+        };
+        
+        const handleTouchEnd = (direction) => (e) => {
+            e.preventDefault();
+            this.keys[direction] = false;
+        };
+        
+        // Левая зона
+        if (touchLeft) {
+            touchLeft.addEventListener('touchstart', handleTouchStart('left'));
+            touchLeft.addEventListener('touchend', handleTouchEnd('left'));
+            touchLeft.addEventListener('touchcancel', handleTouchEnd('left'));
+            
+            // Для мыши (тестирование на ПК)
+            touchLeft.addEventListener('mousedown', handleTouchStart('left'));
+            touchLeft.addEventListener('mouseup', handleTouchEnd('left'));
+            touchLeft.addEventListener('mouseleave', handleTouchEnd('left'));
+        }
+        
+        // Правая зона
+        if (touchRight) {
+            touchRight.addEventListener('touchstart', handleTouchStart('right'));
+            touchRight.addEventListener('touchend', handleTouchEnd('right'));
+            touchRight.addEventListener('touchcancel', handleTouchEnd('right'));
+            
+            // Для мыши (тестирование на ПК)
+            touchRight.addEventListener('mousedown', handleTouchStart('right'));
+            touchRight.addEventListener('mouseup', handleTouchEnd('right'));
+            touchRight.addEventListener('mouseleave', handleTouchEnd('right'));
+        }
+        
+        // ---- КНОПКИ ----
         const startBtn = document.getElementById('startBtn');
         const restartBtn = document.getElementById('restartBtn');
         
         if (startBtn) {
             startBtn.addEventListener('click', () => {
-                console.log('🖱️ Нажата кнопка "Начать игру"');
+                console.log('Нажата кнопка "Начать игру"');
                 this.startGame();
             });
         }
         
         if (restartBtn) {
             restartBtn.addEventListener('click', () => {
-                console.log('🖱️ Нажата кнопка "Играть снова"');
+                console.log('Нажата кнопка "Играть снова"');
                 this.startGame();
             });
         }
         
-        console.log('✅ Управление настроено');
+        console.log('Управление настроено');
     }
     
     // ============================================
@@ -139,5 +179,5 @@ class GameController {
     }
 }
 
-console.log('✅ Класс GameController создан!');
-console.log('🔍 Тип GameController:', typeof GameController);
+console.log('Класс GameController создан!');
+console.log('Тип GameController:', typeof GameController);
